@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+# Local, full-size warehouse. CI publishes only data/marts/*.parquet.
+data/github.duckdb
+data/github.duckdb.wal
+transform/target/
+transform/logs/
+transform/.user.yml
+.dbt/
+.streamlit/secrets.toml
+.DS_Store

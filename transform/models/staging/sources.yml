@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw_github
+    schema: raw_github
+    tables:
+      - name: repos
+      - name: contributions
+      - name: contribution_calendar
+      - name: issues
+      - name: pull_requests

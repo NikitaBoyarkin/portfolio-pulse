@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_repos
+    columns:
+      - name: repo
+        tests: [unique, not_null]
+      - name: layer
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["data", "web", "learning", "vault", "other"]
+
+  - name: fct_portfolio_health
+    columns:
+      - name: repo
+        tests: [unique, not_null]
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["active", "quiet", "dormant", "archived"]
+      - name: days_since_push
+        tests: [not_null]
+
+  - name: fct_activity_weekly
+    columns:
+      - name: week_start
+        tests: [unique, not_null]
+      - name: contributions
+        tests: [not_null]
+
+  - name: fct_layer_activity
+    columns:
+      - name: layer
+        tests: [unique, not_null]
+
+  - name: fct_repo_snapshots
+    columns:
+      - name: snapshot_date
+        tests: [not_null]

@@ -1,0 +1,5 @@
+# Streamlit Community Cloud does not read pyproject.toml.
+streamlit>=1.36
+duckdb>=1.1
+pandas>=2.2
+plotly>=5.20

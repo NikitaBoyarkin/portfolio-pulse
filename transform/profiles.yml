@@ -1,0 +1,13 @@
+portfolio_pulse:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_PATH', 'data/github.duckdb') }}"
+      schema: main
+      threads: 2
+    motherduck:
+      type: duckdb
+      path: "md:github"
+      schema: main
+      threads: 2

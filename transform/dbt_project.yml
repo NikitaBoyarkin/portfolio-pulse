@@ -1,0 +1,22 @@
+name: "portfolio_pulse"
+version: "1.0.0"
+profile: "portfolio_pulse"
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "logs"]
+
+vars:
+  # dbt-duckdb resolves relative paths against the working directory, so run
+  # dbt from the repo root (make transform), not from transform/.
+  marts_path: "{{ env_var('MARTS_PATH', 'data/marts') }}"
+
+models:
+  portfolio_pulse:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: external
