@@ -17,11 +17,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # The default GITHUB_TOKEN authenticates as a bot: it sees one repo and no
+      # contributions. A user PAT (public repos, read-only) is required.
+      GITHUB_TOKEN: ${{ secrets.PORTFOLIO_TOKEN }}
       DESTINATION: duckdb
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
+      - name: Require PORTFOLIO_TOKEN
+        run: |
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "::error::Secret PORTFOLIO_TOKEN is not set. Create a fine-grained PAT (public repos, read-only) and add it as PORTFOLIO_TOKEN."
+            exit 1
+          fi
       - run: uv sync --all-groups
       - run: make ingest
       - run: make transform

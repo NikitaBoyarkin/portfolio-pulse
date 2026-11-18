@@ -27,6 +27,16 @@ make test
 
 Everything lands in `data/github.duckdb`. The marts are published as parquet in `data/marts/`.
 
+### Running the daily workflow
+
+The workflow needs a **user** token, not the default `GITHUB_TOKEN`: the bot token sees a single
+repository and cannot read the contribution calendar.
+
+1. Create a fine-grained PAT scoped to *public repositories*, read-only (or a classic token with
+   `read:user` and `public_repo`).
+2. Add it as the repository secret `PORTFOLIO_TOKEN`.
+3. Run the `Refresh data` workflow — it ingests, builds, tests, and commits `data/marts/`.
+
 ## Metrics
 
 Defined once in dbt, `transform/models/marts/`:

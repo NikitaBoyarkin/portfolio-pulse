@@ -285,7 +285,18 @@ def destination():
     return dlt.destinations.duckdb(credentials=os.environ.get("DUCKDB_PATH", "data/github.duckdb"))
 
 
+def assert_user_token() -> None:
+    """Actions' default GITHUB_TOKEN belongs to a bot: no contributions, one repo."""
+    viewer = graphql("query { viewer { login __typename } }", {})["viewer"]
+    if viewer["__typename"] != "User":
+        raise RuntimeError(
+            f"Token belongs to a {viewer['__typename']}, not a user, so contributions "
+            "cannot be read. Add a user personal access token as the PORTFOLIO_TOKEN secret."
+        )
+
+
 def main() -> None:
+    assert_user_token()
     pipeline = dlt.pipeline(
         pipeline_name="github",
         destination=destination(),
